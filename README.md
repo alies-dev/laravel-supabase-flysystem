@@ -45,7 +45,7 @@ Add the following config to the disk array in `config/filesystems.php`:
     'url' => env('SUPABASE_STORAGE_URL'), // Custom URL for public access
     'public' => env('SUPABASE_STORAGE_PUBLIC', false), // Set to true for public buckets
 
-    'default_signed_url_ttl,' => 60 * 60 * 24, // Default TTL for signed URLs (1 day)
+    'signed_url_ttl,' => 60 * 60 * 24, // Default TTL for signed URLs (1 day)
 ],
 ```
 

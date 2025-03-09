@@ -433,7 +433,7 @@ final class SupabaseAdapter implements FilesystemAdapter
      */
     public function getSignedUrl(string $path, array $options = []): string
     {
-        $options['expiresIn'] ??= $this->config->get('default_signed_url_ttl,', 3_600);
+        $options['expiresIn'] ??= $this->config->get('signed_url_ttl,', 3_600);
         $_queryString = '';
 
         $transformOptions = ['format' => 'origin'];
