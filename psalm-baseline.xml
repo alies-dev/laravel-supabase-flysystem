@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.8.8@1361cd33008feb3ae2b4a93f1860e14e538ec8c2">
+  <file src="src/SupabaseAdapter.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[is_resource($contents)]]></code>
+    </DocblockTypeContradiction>
+    <InvalidDocblock>
+      <code><![CDATA[array{transform?: string, download?: bool, transform?: array<string, scalar>, ...}]]></code>
+    </InvalidDocblock>
+    <MixedArgument>
+      <code><![CDATA[$defaultUrlGenerationOptions]]></code>
+      <code><![CDATA[$defaultUrlGenerationOptions]]></code>
+      <code><![CDATA[$itemMetadata]]></code>
+      <code><![CDATA[$itemMetadata]]></code>
+      <code><![CDATA[$itemMetadata['mimetype'] ?? null]]></code>
+      <code><![CDATA[$itemMetadata['size'] ?? null]]></code>
+      <code><![CDATA[$mimeType]]></code>
+      <code><![CDATA[$options['transform']]]></code>
+      <code><![CDATA[$response->json('signedURL')]]></code>
+      <code><![CDATA[$response->json()]]></code>
+      <code><![CDATA[$url]]></code>
+      <code><![CDATA[$url]]></code>
+      <code><![CDATA[Arr::get($item, 'metadata.size')]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$itemMetadata['lastModified']]]></code>
+      <code><![CDATA[$itemMetadata['mimetype']]]></code>
+      <code><![CDATA[$itemMetadata['size']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code><![CDATA[$defaultUrlGeneration]]></code>
+      <code><![CDATA[$defaultUrlGenerationOptions]]></code>
+      <code><![CDATA[$endpoint]]></code>
+      <code><![CDATA[$itemMetadata]]></code>
+      <code><![CDATA[$lastModified]]></code>
+      <code><![CDATA[$lastModifiedRaw]]></code>
+      <code><![CDATA[$mimeType]]></code>
+      <code><![CDATA[$options['expiresIn']]]></code>
+      <code><![CDATA[$this->bucket]]></code>
+      <code><![CDATA[$this->key]]></code>
+      <code><![CDATA[$url]]></code>
+      <code><![CDATA[$url]]></code>
+    </MixedAssignment>
+    <MixedOperand>
+      <code><![CDATA[$defaultUrlGeneration]]></code>
+      <code><![CDATA[$endpoint]]></code>
+      <code><![CDATA[$this->key]]></code>
+    </MixedOperand>
+    <MixedReturnTypeCoercion>
+      <code><![CDATA[$item]]></code>
+      <code><![CDATA[array<string, mixed>]]></code>
+    </MixedReturnTypeCoercion>
+    <PossiblyFalseArgument>
+      <code><![CDATA[fread($tempHandle, 8192)]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$itemMetadata['size'] ?? null]]></code>
+      <code><![CDATA[$options['transform']]]></code>
+    </PossiblyInvalidArgument>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[$finfo->buffer($contents)]]></code>
+      <code><![CDATA[$finfo->buffer(fread($tempHandle, 8192))]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/SupabaseStorageServiceProvider.php">
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$config]]></code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="tests/Feature/DirectoryOperationsFeatureTest.php">
+    <MixedArgument>
+      <code><![CDATA[$request->data()['prefixes']]]></code>
+    </MixedArgument>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[fileSize]]></code>
+      <code><![CDATA[fileSize]]></code>
+      <code><![CDATA[mimeType]]></code>
+      <code><![CDATA[mimeType]]></code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="tests/Feature/FeatureTestCase.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function setUp(): void]]></code>
+    </MissingOverrideAttribute>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[array_merge([
+            'endpoint' => self::TEST_ENDPOINT,
+            'bucket' => self::TEST_BUCKET,
+            'key' => self::TEST_KEY,
+            'public' => 'public', // Ensure public URL generation is enabled
+        ], $config)]]></code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="tests/Feature/FileOperationsFeatureTest.php">
+    <MixedArrayAccess>
+      <code><![CDATA[$request->data()['prefixes'][0]]]></code>
+    </MixedArrayAccess>
+  </file>
+  <file src="tests/Feature/UrlGenerationFeatureTest.php">
+    <InvalidArgument>
+      <code><![CDATA[[
+            'expiresIn' => 1800,
+            'download' => true,
+        ]]]></code>
+    </InvalidArgument>
+  </file>
+</files>
