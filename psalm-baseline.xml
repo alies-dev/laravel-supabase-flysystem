@@ -97,6 +97,14 @@
     </MixedArrayAccess>
   </file>
   <file src="tests/Feature/UrlGenerationFeatureTest.php">
+    <InternalMethod>
+      <code><![CDATA[getPublicUrl]]></code>
+      <code><![CDATA[getPublicUrl]]></code>
+      <code><![CDATA[getPublicUrl]]></code>
+      <code><![CDATA[getSignedUrl]]></code>
+      <code><![CDATA[getSignedUrl]]></code>
+      <code><![CDATA[getSignedUrl]]></code>
+    </InternalMethod>
     <InvalidArgument>
       <code><![CDATA[[
             'expiresIn' => 1800,

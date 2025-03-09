@@ -414,6 +414,7 @@ final class SupabaseAdapter implements FilesystemAdapter
     }
 
     /**
+     * @internal
      * @param array{expiresIn?: int, transform?: string, download?: string, ...} $options
      * @throws UnableToGenerateTemporaryUrl
      */
@@ -452,6 +453,7 @@ final class SupabaseAdapter implements FilesystemAdapter
     }
 
     /**
+     * @internal
      * @param array{transform?: string, download?: bool, transform?: array<string, scalar>, ...} $options
      * @throws \RuntimeException
      */
