@@ -459,7 +459,7 @@ final class SupabaseAdapter implements FilesystemAdapter
     {
         $public = $this->config->get('public', true);
         if (! is_bool($public) || $public === false) {
-            throw new \InvalidArgumentException("Your filesystem for the {$this->bucket} bucket is not configured to allow public URLs");
+            throw new \InvalidArgumentException(sprintf('Your filesystem for the %s bucket is not configured to allow public URLs', $this->bucket));
         }
 
         $url = $this->config->get('url', $this->endpoint);
