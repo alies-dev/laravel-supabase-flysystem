@@ -4,43 +4,44 @@
     <DocblockTypeContradiction>
       <code><![CDATA[is_resource($contents)]]></code>
     </DocblockTypeContradiction>
+    <InvalidArgument>
+      <code><![CDATA[[...$options, 'expiresIn' => max(0, (int) now()->diffInSeconds($expiration))]]]></code>
+    </InvalidArgument>
     <MixedArgument>
-      <code><![CDATA[$url_options]]></code>
-      <code><![CDATA[$url_options]]></code>
       <code><![CDATA[$itemMetadata]]></code>
       <code><![CDATA[$itemMetadata]]></code>
       <code><![CDATA[$itemMetadata['mimetype'] ?? null]]></code>
       <code><![CDATA[$itemMetadata['size'] ?? null]]></code>
       <code><![CDATA[$mimeType]]></code>
-      <code><![CDATA[$options['transform']]]></code>
       <code><![CDATA[$response->json('signedURL')]]></code>
       <code><![CDATA[$response->json()]]></code>
       <code><![CDATA[$url]]></code>
       <code><![CDATA[$url]]></code>
       <code><![CDATA[Arr::get($item, 'metadata.size')]]></code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$urlOptions]]></code>
+    </MixedArgumentTypeCoercion>
     <MixedArrayAccess>
       <code><![CDATA[$itemMetadata['lastModified']]]></code>
       <code><![CDATA[$itemMetadata['mimetype']]]></code>
       <code><![CDATA[$itemMetadata['size']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code><![CDATA[$defaultUrlGeneration]]></code>
-      <code><![CDATA[$url_options]]></code>
+      <code><![CDATA[$download]]></code>
       <code><![CDATA[$endpoint]]></code>
       <code><![CDATA[$itemMetadata]]></code>
       <code><![CDATA[$lastModified]]></code>
       <code><![CDATA[$lastModifiedRaw]]></code>
       <code><![CDATA[$mimeType]]></code>
-      <code><![CDATA[$options['expiresIn']]]></code>
       <code><![CDATA[$this->bucket]]></code>
       <code><![CDATA[$this->key]]></code>
       <code><![CDATA[$url]]></code>
       <code><![CDATA[$url]]></code>
     </MixedAssignment>
     <MixedOperand>
-      <code><![CDATA[$defaultUrlGeneration]]></code>
       <code><![CDATA[$endpoint]]></code>
+      <code><![CDATA[$this->config->get('public', true)]]></code>
       <code><![CDATA[$this->key]]></code>
     </MixedOperand>
     <MixedReturnTypeCoercion>

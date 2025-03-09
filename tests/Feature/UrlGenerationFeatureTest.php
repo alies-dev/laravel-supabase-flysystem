@@ -79,7 +79,7 @@ final class UrlGenerationFeatureTest extends FeatureTestCase
         $result = $adapter->getSignedUrl('test-file.txt');
 
         // Assert the result
-        $this->assertSame('https://example.com/signed-url?transform={"format":"origin"}', $result);
+        $this->assertSame('https://example.com/signed-url', $result);
 
         // Assert the HTTP request was made
         Http::assertSent(static fn(Request $request): bool => $request->method() === 'POST' &&
@@ -104,10 +104,11 @@ final class UrlGenerationFeatureTest extends FeatureTestCase
         $result = $adapter->getSignedUrl('test-file.txt', [
             'expiresIn' => 1800,
             'download' => true,
+            'transform' => ['width' => 100],
         ]);
 
         // Assert the result
-        $this->assertSame('https://example.com/signed-url?transform={"format":"origin"}&download', $result);
+        $this->assertSame('https://example.com/signed-url?download', $result);
 
         // Assert the HTTP request was made
         Http::assertSent(static fn(Request $request): bool => $request->method() === 'POST' &&
@@ -150,7 +151,7 @@ final class UrlGenerationFeatureTest extends FeatureTestCase
         $result = $adapter->getTemporaryUrl('test-file.txt', now()->addHour(), []);
 
         // Assert the result
-        $this->assertSame('https://example.com/signed-url?transform={"format":"origin"}', $result);
+        $this->assertSame('https://example.com/signed-url', $result);
 
         // Assert the HTTP request was made
         Http::assertSent(static fn(Request $request): bool => $request->method() === 'POST' &&

@@ -27,15 +27,21 @@ use League\Flysystem\UnableToWriteFile;
 
 /**
  * @see https://supabase.com/docs/guides/storage/s3/compatibility
+ * @see https://github.com/supabase/storage-js/blob/main/src/lib/types.ts
  *
  * Image Transformations:
  * @see https://supabase.com/docs/guides/storage/serving/image-transformations#transformation-options
- * @psalm-type ImageTransformationOptions = array{
+ * @psalm-type TransformOptions = array{
  *     width?: positive-int,
  *     height?: positive-int,
  *     resize?: 'contain'|'cover'|'fill',
- *     format?: 'origin'|'avif',
  *     quality?: int<20, 100>,
+ *     format?: 'origin'|'avif',
+ * }
+ * @psalm-type UrlParameters = array{
+ *     download?: string|bool,
+ *     transform?: TransformOptions,
+ *     expiresIn?: int,
  * }
  */
 final class SupabaseAdapter implements FilesystemAdapter
@@ -110,7 +116,7 @@ final class SupabaseAdapter implements FilesystemAdapter
             throw UnableToWriteFile::atLocation($path, $res->body());
         }
 
-        // Delete empty placeholder file if not specified directly
+        // Delete an empty placeholder file if not specified directly
         $filename = pathinfo($path, PATHINFO_BASENAME);
         if ($filename !== self::EMPTY_FOLDER_PLACEHOLDER_NAME) {
             $dirname = pathinfo($path, PATHINFO_DIRNAME);
@@ -431,46 +437,41 @@ final class SupabaseAdapter implements FilesystemAdapter
 
     /**
      * @internal
-     * @param array{expiresIn?: int, transform?: ImageTransformationOptions, download?: bool|string, ...} $options
+     * @see https://supabase.com/docs/guides/storage/serving/image-transformations?queryGroups=language&language=js#signing-urls-with-transformation-options
+     * @psalm-param UrlParameters $options
      * @throws UnableToGenerateTemporaryUrl
      */
     public function getSignedUrl(string $path, array $options = []): string
     {
-        $options['expiresIn'] ??= $this->config->get('signed_url_ttl,', 3_600);
-        $_queryString = '';
+        $url = $this->config->get('url', $this->endpoint);
 
-        $transformOptions = [];
+        $apiBody = [
+            'expiresIn' => $options['expiresIn'] ?? $this->config->get('signed_url_ttl,', 3_600),
+        ];
+
         if (isset($options['transform'])) {
-            $transformOptions = array_merge($transformOptions, $options['transform']);
-            unset($options['transform']);
+            $apiBody['transform'] = $options['transform'];
         }
 
-        if (Arr::get($options, 'download')) {
-            $_queryString = '&download';
-            unset($options['download']);
-        }
-
-        $response = $this->httpClient->post(sprintf('/object/sign/%s/%s', $this->bucket, $path), $options);
+        /** @see https://supabase.github.io/storage/#/object/post_object_sign__bucketName___wildcard_ */
+        $response = $this->httpClient->post(sprintf('/object/sign/%s/%s', $this->bucket, $path), $apiBody);
         if (!$response->successful() || $response->json('signedURL') === null) {
             throw new UnableToGenerateTemporaryUrl($response->body(), $path);
         }
 
-        $url = $this->config->get('url', $this->endpoint);
         $signedUrl = $this->joinPaths($url, $response->json('signedURL'));
 
-        $transformJson = json_encode($transformOptions);
-        if ($transformJson === false) {
-            throw new UnableToGenerateTemporaryUrl('Failed to encode transform options', $path);
+        if ($download = Arr::get($options, 'download')) {
+            $signedUrl .= (str_contains($signedUrl, '?') ? '&' : '?').'download'.(is_string($download) ? "=$download" : '');
         }
 
-        $signedUrl .= (str_contains($signedUrl, '?') ? '&' : '?').'transform='.$transformJson;
-
-        return urldecode($signedUrl.$_queryString);
+        return urldecode($signedUrl);
     }
 
     /**
      * @internal
-     * @param array{transform?: ImageTransformationOptions, download?: bool|string, ...} $options
+     * @see https://supabase.com/docs/guides/storage/serving/image-transformations?queryGroups=language&language=js#get-a-public-url-for-a-transformed-image
+     * @pslam-param UrlParameters $options
      * @throws \RuntimeException
      */
     public function getPublicUrl(string $path, array $options = []): string
@@ -506,7 +507,7 @@ final class SupabaseAdapter implements FilesystemAdapter
     /**
      * Laravel's magic method.
      * Used by {@see \Illuminate\Filesystem\FilesystemAdapter::temporaryUrl}
-     * @param array<mixed> $options
+     * @param UrlParameters $options
      * @api
      */
     public function getTemporaryUrl(string $path, \DateTimeInterface $expiration, array $options): string
