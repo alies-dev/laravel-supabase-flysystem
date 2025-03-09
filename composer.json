@@ -10,12 +10,12 @@
         "league/flysystem": "^3.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.71",
         "orchestra/testbench": "^9.0 || ^10.0",
         "phpunit/phpunit": "^11.5 || ^12.0",
+        "psalm/plugin-phpunit": "^0.19.2",
         "rector/rector": "^2.0",
-        "vimeo/psalm": "^6.8",
-        "friendsofphp/php-cs-fixer": "^3.71",
-        "psalm/plugin-phpunit": "^0.19.2"
+        "vimeo/psalm": "^6.8"
     },
     "minimum-stability": "stable",
     "autoload": {
@@ -28,6 +28,9 @@
             "Tests\\": "tests/"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "laravel": {
             "providers": [
@@ -37,9 +40,9 @@
     },
     "scripts": {
         "cs": "export PHP_CS_FIXER_IGNORE_ENV=1 && php-cs-fixer fix --no-interaction --ansi --verbose --allow-risky=yes",
-        "rector": "vendor/bin/rector process",
         "psalm": "vendor/bin/psalm",
         "psalm:bl": "vendor/bin/psalm --set-baseline",
+        "rector": "vendor/bin/rector process",
         "sa": "@psalm",
         "sa:bl": "@psalm:bl",
         "test": "vendor/bin/phpunit"

@@ -6,7 +6,7 @@
 [![Tests](https://github.com/alies-dev/laravel-supabase-flysystem/actions/workflows/phpunit.yml/badge.svg)](https://github.com/alies-dev/laravel-supabase-flysystem/actions/workflows/phpunit.yml)
 [![codecov](https://codecov.io/gh/alies-dev/laravel-supabase-flysystem/graph/badge.svg?token=PJG9VED36T)](https://codecov.io/gh/alies-dev/laravel-supabase-flysystem)
 
-A Laravel Flysystem adapter for [Supabase Storage](https://supabase.com/docs/guides/storage) with proper handling of signed URLs and transform options.
+A [Laravel Flysystem](https://laravel.com/docs/master/filesystem) adapter for [Supabase Storage](https://supabase.com/docs/guides/storage) with proper handling of signed URLs and transform options.
 
 ## Installation
 
