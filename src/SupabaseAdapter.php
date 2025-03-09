@@ -459,7 +459,7 @@ final class SupabaseAdapter implements FilesystemAdapter
     public function getPublicUrl(string $path, array $options = []): string
     {
         $public = $this->config->get('public', true);
-        if (! is_string($public) || $public === '') {
+        if (! is_bool($public) || $public === false) {
             throw new \RuntimeException('Your filesystem is not configured to allow public url');
         }
 
