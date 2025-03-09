@@ -49,8 +49,8 @@ jobs:
           SUPABASE_STORAGE_ENDPOINT: ${{ secrets.SUPABASE_STORAGE_ENDPOINT }}
           SUPABASE_STORAGE_URL: ${{ secrets.SUPABASE_STORAGE_URL }}
 
-      - name: Send PHP code coverage report to Codecov.io
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: phpunit
+          slug: alies-dev/laravel-supabase-flysystem

@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/packagist/l/alies-dev/laravel-supabase-flysystem.svg?style=flat-square)](https://packagist.org/packages/alies-dev/laravel-supabase-flysystem)
 [![Type coverage](https://shepherd.dev/github/alies-dev/laravel-supabase-flysystem/coverage.svg)](https://shepherd.dev/github/alies-dev/laravel-supabase-flysystem)
 [![Tests](https://github.com/alies-dev/laravel-supabase-flysystem/actions/workflows/phpunit.yml/badge.svg)](https://github.com/alies-dev/laravel-supabase-flysystem/actions/workflows/phpunit.yml)
+[![codecov](https://codecov.io/gh/alies-dev/laravel-supabase-flysystem/graph/badge.svg?token=PJG9VED36T)](https://codecov.io/gh/alies-dev/laravel-supabase-flysystem)
 
 A Laravel Flysystem adapter for Supabase Storage with proper handling of signed URLs and transform options.
 
