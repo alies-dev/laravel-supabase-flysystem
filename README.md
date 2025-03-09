@@ -46,6 +46,7 @@ Add the following config to the disk array in `config/filesystems.php`:
     'public' => env('SUPABASE_STORAGE_PUBLIC', false), // Set to true for public buckets
 
     'signed_url_ttl,' => 60 * 60 * 24, // Default TTL for signed URLs (1 day)
+    'url_options' => [], // Default URL generation options supported by Supabase Storage (download, transform)
 ],
 ```
 

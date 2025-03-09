@@ -410,25 +410,28 @@ final class SupabaseAdapter implements FilesystemAdapter
     }
 
     /**
+     * Laravel's magic method.
+     * Used by {@see \Illuminate\Filesystem\FilesystemAdapter::url}
      * @api
-     * @see \Illuminate\Filesystem\FilesystemAdapter::url
      * @throws FilesystemException
      */
     public function getUrl(string $path): string
     {
-        $defaultUrlGeneration = $this->config->get('defaultUrlGeneration', $this->config->get('public', true) ? 'public' : 'signed');
-        $defaultUrlGenerationOptions = $this->config->get('defaultUrlGenerationOptions', []);
+        $urlOptions = $this->config->get('url_options', []);
+        if (! is_array($urlOptions)) {
+            throw new \InvalidArgumentException('Invalid configuration: "url_options" must be an array');
+        }
 
-        return match ($defaultUrlGeneration) {
-            'public' => $this->getPublicUrl($path, $defaultUrlGenerationOptions),
-            'signed' => $this->getSignedUrl($path, $defaultUrlGenerationOptions),
-            default => throw new \InvalidArgumentException('Invalid value for "defaultUrlGeneration": '.$defaultUrlGeneration),
+        return match ($this->config->get('public', true)) {
+            true => $this->getPublicUrl($path, $urlOptions),
+            false => $this->getSignedUrl($path, $urlOptions),
+            default => throw new \InvalidArgumentException('Invalid value for "public" config key: '.$this->config->get('public', true)),
         };
     }
 
     /**
      * @internal
-     * @param array{expiresIn?: int, transform?: ImageTransformationOptions, download?: bool, ...} $options
+     * @param array{expiresIn?: int, transform?: ImageTransformationOptions, download?: bool|string, ...} $options
      * @throws UnableToGenerateTemporaryUrl
      */
     public function getSignedUrl(string $path, array $options = []): string
@@ -436,7 +439,7 @@ final class SupabaseAdapter implements FilesystemAdapter
         $options['expiresIn'] ??= $this->config->get('signed_url_ttl,', 3_600);
         $_queryString = '';
 
-        $transformOptions = ['format' => 'origin'];
+        $transformOptions = [];
         if (isset($options['transform'])) {
             $transformOptions = array_merge($transformOptions, $options['transform']);
             unset($options['transform']);
@@ -467,7 +470,7 @@ final class SupabaseAdapter implements FilesystemAdapter
 
     /**
      * @internal
-     * @param array{transform?: ImageTransformationOptions, download?: bool, ...} $options
+     * @param array{transform?: ImageTransformationOptions, download?: bool|string, ...} $options
      * @throws \RuntimeException
      */
     public function getPublicUrl(string $path, array $options = []): string
@@ -502,9 +505,9 @@ final class SupabaseAdapter implements FilesystemAdapter
 
     /**
      * Laravel's magic method.
+     * Used by {@see \Illuminate\Filesystem\FilesystemAdapter::temporaryUrl}
      * @param array<mixed> $options
      * @api
-     * @see \Illuminate\Filesystem\FilesystemAdapter::temporaryUrl
      */
     public function getTemporaryUrl(string $path, \DateTimeInterface $expiration, array $options): string
     {

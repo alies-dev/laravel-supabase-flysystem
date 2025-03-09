@@ -5,8 +5,8 @@
       <code><![CDATA[is_resource($contents)]]></code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code><![CDATA[$defaultUrlGenerationOptions]]></code>
-      <code><![CDATA[$defaultUrlGenerationOptions]]></code>
+      <code><![CDATA[$url_options]]></code>
+      <code><![CDATA[$url_options]]></code>
       <code><![CDATA[$itemMetadata]]></code>
       <code><![CDATA[$itemMetadata]]></code>
       <code><![CDATA[$itemMetadata['mimetype'] ?? null]]></code>
@@ -26,7 +26,7 @@
     </MixedArrayAccess>
     <MixedAssignment>
       <code><![CDATA[$defaultUrlGeneration]]></code>
-      <code><![CDATA[$defaultUrlGenerationOptions]]></code>
+      <code><![CDATA[$url_options]]></code>
       <code><![CDATA[$endpoint]]></code>
       <code><![CDATA[$itemMetadata]]></code>
       <code><![CDATA[$lastModified]]></code>
