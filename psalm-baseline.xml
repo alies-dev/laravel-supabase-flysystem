@@ -4,9 +4,6 @@
     <DocblockTypeContradiction>
       <code><![CDATA[is_resource($contents)]]></code>
     </DocblockTypeContradiction>
-    <InvalidDocblock>
-      <code><![CDATA[array{transform?: string, download?: bool, transform?: array<string, scalar>, ...}]]></code>
-    </InvalidDocblock>
     <MixedArgument>
       <code><![CDATA[$defaultUrlGenerationOptions]]></code>
       <code><![CDATA[$defaultUrlGenerationOptions]]></code>
@@ -55,7 +52,6 @@
     </PossiblyFalseArgument>
     <PossiblyInvalidArgument>
       <code><![CDATA[$itemMetadata['size'] ?? null]]></code>
-      <code><![CDATA[$options['transform']]]></code>
     </PossiblyInvalidArgument>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[$finfo->buffer($contents)]]></code>
@@ -105,11 +101,5 @@
       <code><![CDATA[getSignedUrl]]></code>
       <code><![CDATA[getSignedUrl]]></code>
     </InternalMethod>
-    <InvalidArgument>
-      <code><![CDATA[[
-            'expiresIn' => 1800,
-            'download' => true,
-        ]]]></code>
-    </InvalidArgument>
   </file>
 </files>

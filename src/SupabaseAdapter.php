@@ -25,6 +25,19 @@ use League\Flysystem\UnableToReadFile;
 use League\Flysystem\UnableToSetVisibility;
 use League\Flysystem\UnableToWriteFile;
 
+/**
+ * @see https://supabase.com/docs/guides/storage/s3/compatibility
+ *
+ * Image Transformations:
+ * @see https://supabase.com/docs/guides/storage/serving/image-transformations#transformation-options
+ * @psalm-type ImageTransformationOptions = array{
+ *     width?: positive-int,
+ *     height?: positive-int,
+ *     resize?: 'contain'|'cover'|'fill',
+ *     format?: 'origin'|'avif',
+ *     quality?: int<20, 100>,
+ * }
+ */
 final class SupabaseAdapter implements FilesystemAdapter
 {
     private const EMPTY_FOLDER_PLACEHOLDER_NAME = '.emptyFolderPlaceholder';
@@ -415,12 +428,12 @@ final class SupabaseAdapter implements FilesystemAdapter
 
     /**
      * @internal
-     * @param array{expiresIn?: int, transform?: string, download?: string, ...} $options
+     * @param array{expiresIn?: int, transform?: ImageTransformationOptions, download?: bool, ...} $options
      * @throws UnableToGenerateTemporaryUrl
      */
     public function getSignedUrl(string $path, array $options = []): string
     {
-        $options['expiresIn'] ??= $this->config->get('signedUrlExpires', 3600);
+        $options['expiresIn'] ??= $this->config->get('default_signed_url_ttl,', 3_600);
         $_queryString = '';
 
         $transformOptions = ['format' => 'origin'];
@@ -454,7 +467,7 @@ final class SupabaseAdapter implements FilesystemAdapter
 
     /**
      * @internal
-     * @param array{transform?: string, download?: bool, transform?: array<string, scalar>, ...} $options
+     * @param array{transform?: ImageTransformationOptions, download?: bool, ...} $options
      * @throws \RuntimeException
      */
     public function getPublicUrl(string $path, array $options = []): string
@@ -465,12 +478,13 @@ final class SupabaseAdapter implements FilesystemAdapter
         }
 
         $url = $this->config->get('url', $this->endpoint);
-        $renderPath = 'object';
 
         $_queryParams = [];
 
-        if (isset($options['transform'])) {
-            $renderPath = 'render/image';
+        $renderPath = isset($options['transform']) ? 'render/image' : 'object';
+
+        /** @see https://supabase.com/docs/guides/storage/serving/image-transformations */
+        if (isset($options['transform']) && $options['transform'] !== []) {
             $_queryParams['transform'] = json_encode($options['transform']);
         }
 

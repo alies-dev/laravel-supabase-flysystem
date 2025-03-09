@@ -40,20 +40,12 @@ Add the following config to the disk array in `config/filesystems.php`:
     'key' => env('SUPABASE_STORAGE_KEY'),
     'bucket' => env('SUPABASE_STORAGE_BUCKET'),
     'endpoint' => env('SUPABASE_STORAGE_ENDPOINT'),
-    
+
     // Optional configuration
     'url' => env('SUPABASE_STORAGE_URL'), // Custom URL for public access
-    'public' => env('SUPABASE_STORAGE_PUBLIC', false), // Set to 'public' for public buckets
-    
-    // URL generation options
-    'defaultUrlGeneration' => 'signed', // 'signed' or 'public'
-    'defaultUrlGenerationOptions' => [
-        'download' => false, // Set to true to force download
-        'transform' => [
-            'format' => 'origin' // Default image format
-        ],
-    ],
-    'signedUrlExpires' => 60 * 60 * 24, // Default expiration time in seconds (1 day)
+    'public' => env('SUPABASE_STORAGE_PUBLIC', false), // Set to true for public buckets
+
+    'default_signed_url_ttl,' => 60 * 60 * 24, // Default TTL for signed URLs (1 day)
 ],
 ```
 
@@ -104,9 +96,9 @@ $transformedUrl = Storage::disk('supabase')->url('path/to/file.jpg', [
     ]
 ]);
 
-// Get a signed URL with download option
+// Get a signed URL with a download option
 $downloadUrl = Storage::disk('supabase')->url('path/to/file.jpg', [
-    'download' => true
+    'download' => true,
 ]);
 ```
 
