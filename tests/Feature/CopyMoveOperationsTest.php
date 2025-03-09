@@ -69,13 +69,11 @@ final class CopyMoveOperationsTest extends FeatureTestCase
         $adapter->move('source-file.txt', 'destination-file.txt', new Config());
 
         // Assert the HTTP request was made
-        Http::assertSent(static function (Request $request): bool {
-            return $request->method() === 'POST' &&
-                $request->url() === self::TEST_ENDPOINT.'/storage/v1/object/move' &&
-                $request->data()['bucketId'] === self::TEST_BUCKET &&
-                $request->data()['sourceKey'] === 'source-file.txt' &&
-                $request->data()['destinationKey'] === 'destination-file.txt';
-        });
+        Http::assertSent(static fn(Request $request): bool => $request->method() === 'POST' &&
+            $request->url() === self::TEST_ENDPOINT.'/storage/v1/object/move' &&
+            $request->data()['bucketId'] === self::TEST_BUCKET &&
+            $request->data()['sourceKey'] === 'source-file.txt' &&
+            $request->data()['destinationKey'] === 'destination-file.txt');
     }
 
     #[Test]
