@@ -25,7 +25,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip
-          coverage: none
+          coverage: pcov
 
       - name: Get composer cache directory
         id: composer-cache
@@ -42,9 +42,15 @@ jobs:
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
-        run: composer test
+        run: composer test -- --coverage-clover=coverage.xml
         env:
           APP_ENV: testing
           SUPABASE_STORAGE_KEY: ${{ secrets.SUPABASE_STORAGE_KEY }}
           SUPABASE_STORAGE_ENDPOINT: ${{ secrets.SUPABASE_STORAGE_ENDPOINT }}
           SUPABASE_STORAGE_URL: ${{ secrets.SUPABASE_STORAGE_URL }}
+
+      - name: Send PHP code coverage report to Codecov.io
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: phpunit
