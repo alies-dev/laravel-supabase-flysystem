@@ -27,7 +27,7 @@ abstract class FeatureTestCase extends BaseTestCase
             'endpoint' => self::TEST_ENDPOINT,
             'bucket' => self::TEST_BUCKET,
             'key' => self::TEST_KEY,
-            'public' => 'public', // Ensure public URL generation is enabled
+            'public' => true, // Ensure public URL generation is enabled
         ], $config));
     }
 }

@@ -76,7 +76,6 @@ final class SupabaseAdapter implements FilesystemAdapter
         return $response->successful() && count($response->json()) >= 1;
     }
 
-    /** @throws FilesystemException */
     #[\Override]
     public function write(string $path, string $contents, Config $config): void
     {
@@ -460,7 +459,7 @@ final class SupabaseAdapter implements FilesystemAdapter
     {
         $public = $this->config->get('public', true);
         if (! is_bool($public) || $public === false) {
-            throw new \RuntimeException('Your filesystem is not configured to allow public url');
+            throw new \InvalidArgumentException("Your filesystem for the {$this->bucket} bucket is not configured to allow public URLs");
         }
 
         $url = $this->config->get('url', $this->endpoint);

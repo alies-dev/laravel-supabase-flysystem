@@ -13,11 +13,24 @@ use PHPUnit\Framework\Attributes\Test;
 final class UrlGenerationFeatureTest extends FeatureTestCase
 {
     #[Test]
+    public function it_fails_on_private_buckets(): void
+    {
+        $adapter = $this->createAdapter([
+            'public' => false,
+            'url' => 'https://example.com',
+        ]);
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $adapter->getPublicUrl('test-file.txt');
+    }
+
+    #[Test]
     public function it_gets_public_url(): void
     {
         // Create the adapter with proper public configuration
         $adapter = $this->createAdapter([
-            'public' => 'public', // String value is required for public URL generation
+            'public' => true,
             'url' => 'https://example.com',
         ]);
 
@@ -33,7 +46,7 @@ final class UrlGenerationFeatureTest extends FeatureTestCase
     {
         // Create the adapter with proper public configuration
         $adapter = $this->createAdapter([
-            'public' => 'public', // String value is required for public URL generation
+            'public' => true,
             'url' => 'https://example.com',
         ]);
 
