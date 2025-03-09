@@ -41,7 +41,7 @@
         "psalm": "vendor/bin/psalm",
         "psalm:bl": "vendor/bin/psalm --set-baseline",
         "sa": "@psalm",
-        "sa:bl": "@psalm",
+        "sa:bl": "@psalm:bl",
         "test": "vendor/bin/phpunit"
     }
 }
