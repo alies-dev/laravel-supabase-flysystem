@@ -522,7 +522,10 @@ final class SupabaseAdapter implements FilesystemAdapter
     private function joinPaths(...$paths): string
     {
         return collect($paths)
-            ->map(fn(string $path): string => str($path)->rtrim('/')->ltrim('/')->toString())
+            ->map(fn(string $path, int $index): string => $index === 0
+                ? str($path)->rtrim('/')->toString()
+                : str($path)->rtrim('/')->ltrim('/')->toString()
+            )
             ->filter()
             ->join('/');
     }
