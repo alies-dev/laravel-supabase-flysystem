@@ -271,12 +271,18 @@ final class SupabaseAdapter implements FilesystemAdapter
         }
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function setVisibility(string $path, string $visibility): void
     {
         throw UnableToSetVisibility::atLocation($path, "Driver doesn't support visibility");
     }
 
+    /**
+     * @psalm-pure
+     */
     #[\Override]
     public function visibility(string $path): FileAttributes
     {
