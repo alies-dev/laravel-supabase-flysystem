@@ -50,7 +50,7 @@ jobs:
           SUPABASE_STORAGE_URL: ${{ secrets.SUPABASE_STORAGE_URL }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: alies-dev/laravel-supabase-flysystem
